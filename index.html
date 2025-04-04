@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show/Hide Password</title>
+    <title>Show and Hide Password</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,55 +12,121 @@
             align-items: center;
             height: 100vh;
             background-color: #f4f4f4;
+            margin: 0;
         }
         .container {
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px;
+            transition: 0.3s;
+        }
+        h2 {
+            margin-bottom: 15px;
+            color: #333;
         }
         input {
-            padding: 8px;
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
             font-size: 16px;
             border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 200px;
+            border-radius: 5px;
+            display: block;
+            color: black;
+        }
+        .password-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .password-container input {
+            flex: 1;
+            color: black;
+        }
+        .toggle-btn {
+            position: absolute;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: #007bff;
+            font-weight: bold;
         }
         button {
-            padding: 8px 12px;
-            font-size: 14px;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
             border: none;
             background: #007bff;
             color: white;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 5px;
+            margin-top: 10px;
         }
-        button:hover {
-            background: #0056b3;
+        .toggle-link {
+            margin-top: 10px;
+            color: #007bff;
+            cursor: pointer;
+            display: block;
+        }
+        .toggle-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <input type="password" id="password" placeholder="Enter password">
-    <button onclick="togglePassword()">Show</button>
+<div class="container" id="formContainer">
+    <h2 id="formTitle">Create an Account</h2>
+    
+    <input type="text" id="username" placeholder="Username">
+    <input type="email" id="email" placeholder="Email">
+    
+    <div class="password-container">
+        <input type="password" id="password" placeholder="Password">
+        <button class="toggle-btn" onclick="togglePassword(this)">Show</button>
+    </div>
+    
+    <button id="submitBtn">Sign Up</button>
+    
+    <span class="toggle-link" onclick="toggleForm()">Already have an account? Login</span>
 </div>
 
 <script>
-    function togglePassword() {
-        let passwordInput = document.getElementById("password");
-        let button = document.querySelector("button");
-        
+    function togglePassword(button) {
+        let passwordInput = button.previousElementSibling;
+
         if (passwordInput.type === "password") {
             passwordInput.type = "text";
+            passwordInput.style.color = "black";
             button.textContent = "Hide";
         } else {
             passwordInput.type = "password";
+            passwordInput.style.color = "black";
             button.textContent = "Show";
+        }
+    }
+
+    function toggleForm() {
+        let formTitle = document.getElementById("formTitle");
+        let submitBtn = document.getElementById("submitBtn");
+        let toggleText = document.querySelector(".toggle-link");
+        let emailInput = document.getElementById("email");
+
+        if (formTitle.textContent === "Create an Account") {
+            formTitle.textContent = "Login";
+            submitBtn.textContent = "Login";
+            emailInput.style.display = "none";
+            toggleText.textContent = "Don't have an account? Sign Up";
+        } else {
+            formTitle.textContent = "Create an Account";
+            submitBtn.textContent = "Sign Up";
+            emailInput.style.display = "block";
+            toggleText.textContent = "Already have an account? Login";
         }
     }
 </script>
